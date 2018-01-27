@@ -75,7 +75,7 @@ public final class NetworkUtils {
      */
     public static URL buildUrl(String locationQuery) {
         // TODO (1) Fix this method to return the URL used to query Open Weather Map's API1
-        Uri builtUri = Uri.parse(WEATHER_API_URL).buildUpon().appendQueryParameter(ZIP_PARAM,locationQuery)
+        Uri builtUri = Uri.parse(STATIC_WEATHER_URL).buildUpon().appendQueryParameter(ZIP_PARAM,locationQuery)
                 .appendQueryParameter(FORMAT_PARAM,units)
                 .appendQueryParameter(FORMAT_PARAM,format)
                 .appendQueryParameter(API_PARAM,apiKey)
