@@ -20,8 +20,12 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+
+import com.example.android.sunshine.utilities.SunshineDateUtils;
 
 /**
  * This class serves as the ContentProvider for all of Sunshine's data. This class allows us to
@@ -122,7 +126,7 @@ public class WeatherProvider extends ContentProvider {
         return true;
     }
 
-//  TODO (1) Implement the bulkInsert method
+//  done (1) Implement the bulkInsert method
     /**
      * Handles requests to insert a set of new rows. In Sunshine, we are only going to be
      * inserting multiple rows of data at a time from a weather forecast. There is no use case
@@ -138,13 +142,44 @@ public class WeatherProvider extends ContentProvider {
      */
     @Override
     public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
-        throw new RuntimeException("Student, you need to implement the bulkInsert method!");
+        //throw new RuntimeException("Student, you need to implement the bulkInsert method!");
 
-//          TODO (2) Only perform our implementation of bulkInsert if the URI matches the CODE_WEATHER code
+//          done (2) Only perform our implementation of bulkInsert if the URI matches the CODE_WEATHER code
+        SQLiteDatabase database = mOpenHelper.getWritableDatabase();
+//              done (3) Return the number of rows inserted from our implementation of bulkInsert
+        int id = sUriMatcher.match(uri);
+        int rowsInserted = 0;
+        switch(id) {
+            case CODE_WEATHER:
+                database.beginTransaction();
 
-//              TODO (3) Return the number of rows inserted from our implementation of bulkInsert
+                try {
+                    for (ContentValues value : values) {
+                        long weatherData = value.getAsLong(WeatherContract.WeatherEntry.COLUMN_DATE);
+                        if (!SunshineDateUtils.isDateNormalized(weatherData)) {
+                            throw new UnsupportedOperationException("Date is not Normalized");
+                        }
 
-//          TODO (4) If the URI does match match CODE_WEATHER, return the super implementation of bulkInsert
+                        long dbID = database.insert(WeatherContract.WeatherEntry.TABLE_NAME, null, value);
+                        if (dbID != -1) {
+                            rowsInserted++;
+                        }
+                    }
+
+                    database.setTransactionSuccessful();
+                } finally {
+                    database.endTransaction();
+
+                }
+                if (rowsInserted > 0) {
+                    getContext().getContentResolver().notifyChange(uri, null);
+                }
+                return rowsInserted;
+
+            default:
+                return super.bulkInsert(uri, null);
+        }
+//          done (4) If the URI does match match CODE_WEATHER, return the super implementation of bulkInsert
     }
 
     /**
