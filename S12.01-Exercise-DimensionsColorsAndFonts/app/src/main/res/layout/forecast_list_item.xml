@@ -15,9 +15,9 @@
      limitations under the License.
 -->
 
-<!-- TODO (7) Color the primary and secondary text appropriately -->
-<!-- TODO (8) Replace dimension values with @dimen resources -->
-<!-- TODO (9) Use sans-serif-light font family for the temperature TextViews -->
+<!-- done (7) Color the primary and secondary text appropriately -->
+<!-- done (8) Replace dimension values with @dimen resources -->
+<!-- done (9) Use sans-serif-light font family for the temperature TextViews -->
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -43,11 +43,12 @@
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginLeft="@dimen/forecast_detail_horizontal_padding"
+        android:layout_marginStart="@dimen/forecast_detail_horizontal_padding"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintLeft_toRightOf="@+id/weather_icon"
+        android:textColor="@color/primary_text"
         tools:text="Today, April 03"/>
 
     <TextView
@@ -57,6 +58,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintLeft_toLeftOf="@+id/date"
         app:layout_constraintTop_toTopOf="@+id/guideline"
+        android:textColor="@color/primary_text"
         tools:text="Rainy"/>
 
     <TextView
@@ -66,6 +68,7 @@
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
         android:textSize="28dp"
+        android:fontFamily="sans-serif-light"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintRight_toLeftOf="@+id/low_temperature"
         app:layout_constraintTop_toTopOf="@+id/guideline"
@@ -77,9 +80,11 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:textSize="28dp"
+        android:textColor="@color/secondary_text"
         app:layout_constraintBottom_toBottomOf="@+id/guideline"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline"
+        android:fontFamily="sans-serif-light"
         tools:text="10\u00b0"/>
 
     <android.support.constraint.Guideline
@@ -87,6 +92,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:textColor="@color/secondary_text"
         app:layout_constraintGuide_percent="0.5"/>
 
 </android.support.constraint.ConstraintLayout>

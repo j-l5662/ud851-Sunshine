@@ -17,15 +17,19 @@ package com.example.android.sunshine;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.sunshine.utilities.SunshineDateUtils;
 import com.example.android.sunshine.utilities.SunshineWeatherUtils;
+
+import org.w3c.dom.Text;
 
 /**
  * {@link ForecastAdapter} exposes a list of weather forecasts
@@ -107,7 +111,7 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
     public void onBindViewHolder(ForecastAdapterViewHolder forecastAdapterViewHolder, int position) {
         mCursor.moveToPosition(position);
 
-//      TODO (7) Replace the single TextView with Views to display all of the weather info
+//      done (7) Replace the single TextView with Views to display all of the weather info
 
         /*******************
          * Weather Summary *
@@ -124,12 +128,18 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
          /* Read low temperature from the cursor (in degrees celsius) */
         double lowInCelsius = mCursor.getDouble(MainActivity.INDEX_WEATHER_MIN_TEMP);
 
-        String highAndLowTemperature =
+        //String highAndLowTemperature =
                 SunshineWeatherUtils.formatHighLows(mContext, highInCelsius, lowInCelsius);
 
-        String weatherSummary = dateString + " - " + description + " - " + highAndLowTemperature;
+       // String weatherSummary = dateString + " - " + description + " - " + highAndLowTemperature;
+        int weatherIcon = mCursor.getInt(MainActivity.INDEX_WEATHER_CONDITION_ID);
+        forecastAdapterViewHolder.weatherIcon.setImageResource(SunshineWeatherUtils.getSmallArtResourceIdForWeatherCondition(weatherIcon));
+        //forecastAdapterViewHolder.weatherSummary.setText(weatherSummary);
+        forecastAdapterViewHolder.highs.setText(String.valueOf(highInCelsius));
+        forecastAdapterViewHolder.lows.setText(String.valueOf(lowInCelsius));
+        forecastAdapterViewHolder.weatherDescription.setText(description);
+        forecastAdapterViewHolder.date.setText(dateString);
 
-        forecastAdapterViewHolder.weatherSummary.setText(weatherSummary);
     }
 
     /**
@@ -163,17 +173,24 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
      * OnClickListener, since it has access to the adapter and the views.
      */
     class ForecastAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-//      TODO (4) Replace the weatherSummary TextView with individual weather detail TextViews
-        final TextView weatherSummary;
+//      done (4) Replace the weatherSummary TextView with individual weather detail TextViews
+        final TextView date;
+        final TextView weatherDescription;
+        final TextView highs;
+        final TextView lows;
 
-//      TODO (5) Add an ImageView for the weather icon
-
+//      done (5) Add an ImageView for the weather icon
+        final ImageView weatherIcon;
         ForecastAdapterViewHolder(View view) {
             super(view);
 
-//          TODO (6) Get references to all new views and delete this line
-            weatherSummary = (TextView) view.findViewById(R.id.tv_weather_data);
-
+//          done (6) Get references to all new views and delete this line
+            //weatherSummary = (TextView) view.findViewById(R.id.tv_weather_data);
+            date = (TextView) view.findViewById(R.id.date);
+            weatherDescription = (TextView) view.findViewById(R.id.weather_description);
+            highs = (TextView) view.findViewById(R.id.high_temperature);
+            lows = (TextView) view.findViewById(R.id.low_temperature);
+            weatherIcon = (ImageView) view.findViewById(R.id.weather_icon);
             view.setOnClickListener(this);
         }
 

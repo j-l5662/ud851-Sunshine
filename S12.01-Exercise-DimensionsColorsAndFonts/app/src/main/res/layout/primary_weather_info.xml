@@ -22,9 +22,9 @@
   - In order to use Android's data binding capabilities, (to avoid having to type findViewById   -
   - over and over again) we wrap this layout in a <layout></layout> tag.                         -
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-<!-- TODO (14) Color the description, high temperature, and low temperature appropriately -->
-<!-- TODO (15) Replace dimension values with @dimen resources -->
-<!-- TODO (16) Use sans-serif-light font family for the temperature TextViews -->
+<!-- done (14) Color the description, high temperature, and low temperature appropriately -->
+<!-- done (15) Replace dimension values with @dimen resources -->
+<!-- done (16) Use sans-serif-light font family for the temperature TextViews -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
@@ -60,10 +60,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:textSize="20sp"
+            android:textSize="@dimen/forecast_text_size"
             app:layout_constraintBottom_toTopOf="@+id/weather_icon"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            android:textColor="@color/primary_text"
             tools:text="Saturday, September 24"/>
 
         <!-- Icon indicating weather condition -->
@@ -76,6 +77,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/horizontal_middle"
             app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/secondary_text"
             tools:src="@drawable/art_clouds"/>
 
         <!-- Text that describes weather condition -->
@@ -84,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textSize="20sp"
+            android:textSize="@dimen/forecast_text_size"
             app:layout_constraintHorizontal_bias="0.52"
             app:layout_constraintLeft_toLeftOf="@+id/weather_icon"
             app:layout_constraintRight_toRightOf="@+id/weather_icon"
@@ -110,6 +112,7 @@
             app:layout_constraintLeft_toLeftOf="@+id/horizontal_middle"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/weather_icon"
+            android:textColor="@color/secondary_text"
             tools:text="19\u00b0"/>
 
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -129,6 +132,7 @@
             app:layout_constraintBaseline_toBaselineOf="@+id/weather_description"
             app:layout_constraintLeft_toLeftOf="@+id/high_temperature"
             app:layout_constraintRight_toRightOf="@+id/high_temperature"
+            android:textColor="@color/secondary_text"
             tools:text="10\u00b0"/>
 
     </android.support.constraint.ConstraintLayout>
